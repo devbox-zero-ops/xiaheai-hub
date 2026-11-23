@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2026 ChatGPT Plus vs Claude Pro vs Cursor Pro 怎么选？开发者月预算与性价比测算 — 夏禾AI</title>
+  <meta name="description" content="2026 年程序员与重度效率用户该订阅 ChatGPT Plus、Claude Pro 还是 Cursor Pro？输入每日提问量、写代码时长与月预算，实时测算订阅 vs API 盈亏平衡点与最优组合方案，附夏禾AI官方自动发货通道（shop.xiaheai.com）。" />
+  <link rel="canonical" href="https://devbox-zero-ops.github.io/xiaheai-hub/cursor-vs-claude-vs-chatgpt.html" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "2026 年预算只有 $20/月，程序员选 ChatGPT Plus、Claude Pro 还是 Cursor Pro？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "如果每天有超过 3 小时在 IDE 内进行多文件重构与代码补全，Cursor Pro 在单编辑场景的效率最高；如果需要同时覆盖联网深度研究、文档分析、图表处理、画图与日常编程，ChatGPT Plus 是覆盖面最全的主力方案。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "每月调用量达到多少时，包月订阅比按量计费 API 更划算？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "以旗舰模型长上下文对话（平均单轮 6,000 输入 Token + 1,200 输出 Token）测算，每天超过 18–25 轮重度对话时，按量 API 月账单就会超过 $20，此时包月会员具备显著成本优势。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "同时使用多套开发效率工具时如何降低长期订阅成本？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "推荐以 ChatGPT Plus 作为综合研究与主力问答入口，高频代码库任务按需搭配 IDE 工具，同时把高频重复的格式化、Token 估算、发票与简历排版等工作留在本地离线零追踪工具中执行。"
+        }
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #070b14;
+      --panel: #0f172a;
+      --card: #1e293b;
+      --border: #334155;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --brand-color: #38bdf8;
+      --green: #4ade80;
+      --amber: #fbbf24;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(circle at 18% 8%, rgba(56, 189, 248, 0.14), transparent 36%),
+        radial-gradient(circle at 82% 14%, rgba(74, 222, 128, 0.10), transparent 36%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      accent-color: var(--brand-color);
+    }
+    a { color: var(--brand-color); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .top-bar {
+      background: linear-gradient(90deg, #0f172a, #1e3a5f, #0f172a);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 10px 16px;
+      text-align: center;
+      font-size: 13.5px;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 28px 18px 60px; }
+    .crumb { font-size: 13px; color: var(--muted); margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
+    h1 { font-size: clamp(24px, 4.4vw, 36px); line-height: 1.25; margin: 0 0 12px; }
+    .lead { color: var(--muted); margin: 0 0 22px; font-size: 15px; }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+    .card h2 { margin: 0 0 14px; font-size: 18px; color: var(--brand-color); }
+    .sliders {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .slider-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .slider-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 13.5px;
+      margin-bottom: 8px;
+    }
+    .slider-val { color: var(--green); font-weight: 700; font-family: ui-monospace, SFMono-Regular, monospace; }
+    input[type="range"] { width: 100%; cursor: pointer; }
+    .opts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+    }
+    .opt {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      cursor: pointer;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13.5px;
+      position: relative;
+    }
+    .opt:hover { border-color: var(--brand-color); }
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 16px;
+      margin-top: 18px;
+    }
+    @media (max-width: 760px) { .result-grid { grid-template-columns: 1fr; } }
+    .result-box {
+      padding: 18px;
+      border-radius: 12px;
+      background: #131f33;
+      border-left: 4px solid var(--green);
+    }
+    .metric-box {
+      padding: 18px;
+      border-radius: 12px;
+      background: #131f33;
+      border: 1px solid var(--border);
+    }
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.2);
+      font-size: 13.5px;
+    }
+    .metric-row:last-child { border-bottom: none; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .cta-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #0284c7, #10b981);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14.5px;
+    }
+    .cta-btn:hover { text-decoration: none; opacity: 0.92; }
+    .cta-sec {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 9px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 13.5px;
+    }
+    .cta-sec:hover { border-color: var(--brand-color); text-decoration: none; }
+
+    /* Responsive table with container queries & sticky headers */
+    .table-wrapper {
+      overflow: auto;
+      max-inline-size: 100%;
+      max-block-size: min(560px, 80vh);
+      container-type: inline-size;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .table-wrapper:focus-visible {
+      outline: 2px solid var(--brand-color);
+      outline-offset: 2px;
+    }
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 13.5px;
+      --label-2: "月费";
+      --label-3: "最强场景";
+      --label-4: "短板与限制";
+      --label-5: "适合人群与入口";
+    }
+    caption {
+      text-align: left;
+      padding: 12px 14px;
+      font-weight: 700;
+      color: var(--text);
+      background: #131f33;
+      border-bottom: 1px solid var(--border);
+    }
+    thead {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 2;
+      background: #131f33;
+    }
+    th, td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+    tbody th {
+      position: sticky;
+      inset-inline-start: 0;
+      z-index: 1;
+      background: var(--panel);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    @container (width < 600px) {
+      table, thead, tbody, tr, th, td { display: block; }
+      thead { display: none; }
+      tr {
+        margin-block-end: 1rem;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        background: var(--panel);
+      }
+      tbody th {
+        position: sticky;
+        inset-block-start: 0;
+        z-index: 2;
+        background: #131f33;
+        white-space: normal;
+      }
+      td::before {
+        font-weight: 700;
+        color: var(--brand-color);
+        display: inline-block;
+        margin-inline-end: 6px;
+      }
+      td:nth-child(2)::before { content: var(--label-2) ": "; }
+      td:nth-child(3)::before { content: var(--label-3) ": "; }
+      td:nth-child(4)::before { content: var(--label-4) ": "; }
+      td:nth-child(5)::before { content: var(--label-5) ": "; }
+    }
+
+    /* Fallback for older browsers without accent-color */
+    @supports not (accent-color: #38bdf8) {
+      form input[type="checkbox"].visually-hidden {
+        position: absolute !important;
+        clip-path: inset(50%) !important;
+        overflow: hidden !important;
+        width: 1px !important;
+        height: 1px !important;
+        margin: -1px !important;
+        padding: 0 !important;
+        border: 0 !important;
+        white-space: nowrap !important;
+      }
+      .opt { padding-left: 2.3rem; }
+      .opt input[type="checkbox"] + span::before {
+        content: "";
+        position: absolute;
+        left: 0.75rem;
+        top: 0.9rem;
+        width: 1.1rem;
+        height: 1.1rem;
+        border: 2px solid #64748b;
+        background: #0f172a;
+        border-radius: 4px;
+      }
+      .opt input[type="checkbox"]:focus-visible + span::before {
+        outline: 2px solid var(--brand-color);
+        outline-offset: 2px;
+      }
+      .opt input[type="checkbox"]:checked + span::before {
+        background-color: var(--brand-color);
+        border-color: var(--brand-color);
+      }
+      .opt input[type="checkbox"]:checked + span::after {
+        content: "✓";
+        position: absolute;
+        left: 0.96rem;
+        top: 0.82rem;
+        color: #070b14;
+        font-weight: 800;
+        font-size: 0.85rem;
+      }
+      input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        background: transparent;
+      }
+      input[type="range"]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 8px;
+        background: linear-gradient(to right, var(--brand-color) var(--progress, 40%), #334155 var(--progress, 40%));
+        border-radius: 4px;
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: var(--brand-color);
+        margin-top: -4px;
+      }
+    }
+
+    .faq-item { border-bottom: 1px solid var(--border); padding: 12px 0; }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q { font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .faq-a { color: var(--muted); font-size: 14px; margin: 0; }
+    footer { text-align: center; font-size: 13px; color: var(--muted); margin-top: 32px; }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    ⚡ <strong>夏禾AI 官方代充商城</strong>：ChatGPT Plus / Pro 正规官方通道 · 24小时自动发货 ·
+    <a href="https://shop.xiaheai.com" target="_blank" rel="noopener" style="font-weight:700;text-decoration:underline;margin-left:4px;">立即前往 shop.xiaheai.com →</a>
+  </div>
+
+  <main class="wrap">
+    <nav class="crumb" aria-label="面包屑导航">
+      <a href="index.html">← XiaheAI 工具矩阵首页</a>
+      <span>·</span>
+      <a href="chatgpt-plus-guide.html">Plus vs API 成本测算</a>
+      <span>·</span>
+      <a href="claude-vs-chatgpt-guide.html">Plus vs Claude 场景对比</a>
+      <span>·</span>
+      <a href="chatgpt-ban-prevention.html">账号稳定性自检</a>
+    </nav>
+
+    <h1>2026 ChatGPT Plus vs Claude Pro vs Cursor Pro 怎么选？</h1>
+    <p class="lead">面向程序员、科研与跨境办公用户的交互式预算测算页：输入你的月预算、每日 IDE 写代码时长与提问频次，直接算出最优订阅组合与按量 API 盈亏平衡点。</p>
+
+    <section class="card">
+      <h2>1. 设定你的使用强度与核心场景</h2>
+      <form id="calcForm" onsubmit="return false;">
+        <div class="sliders">
+          <div class="slider-box">
+            <div class="slider-head">
+              <label for="budget">每月工具预算（USD）</label>
+              <span class="slider-val" id="budgetVal">$20 / 月</span>
+            </div>
+            <input type="range" id="budget" min="10" max="200" step="10" value="20" />
+          </div>
+          <div class="slider-box">
+            <div class="slider-head">
+              <label for="codeHours">每日 IDE 写代码时长</label>
+              <span class="slider-val" id="codeHoursVal">3 小时/天</span>
+            </div>
+            <input type="range" id="codeHours" min="0" max="10" step="1" value="3" />
+          </div>
+          <div class="slider-box">
+            <div class="slider-head">
+              <label for="dailyPrompts">每日综合对话/研究轮数</label>
+              <span class="slider-val" id="dailyPromptsVal">30 轮/天</span>
+            </div>
+            <input type="range" id="dailyPrompts" min="5" max="120" step="5" value="30" />
+          </div>
+        </div>
+
+        <div class="opts" id="opts">
+          <label class="opt" for="needSearch">
+            <input type="checkbox" id="needSearch" class="visually-hidden" value="search" checked />
+            <span>联网搜索 + Deep Research 深度报告与文献梳理</span>
+          </label>
+          <label class="opt" for="needMulti">
+            <input type="checkbox" id="needMulti" class="visually-hidden" value="multimodal" checked />
+            <span>语音对话、图片分析、Excel/PDF 图表处理</span>
+          </label>
+          <label class="opt" for="needRepo">
+            <input type="checkbox" id="needRepo" class="visually-hidden" value="repo" />
+            <span>全仓库多文件联动重构、Tab 自动补全</span>
+          </label>
+          <label class="opt" for="needLong">
+            <input type="checkbox" id="needLong" class="visually-hidden" value="longwrite" />
+            <span>超长代码审查与细腻长文本润色</span>
+          </label>
+          <label class="opt" for="needStable">
+            <input type="checkbox" id="needStable" class="visually-hidden" value="stable" checked />
+            <span>追求长期稳定使用、尽量减少账号风控折腾</span>
+          </label>
+        </div>
+      </form>
+
+      <div class="result-grid">
+        <div class="result-box" id="recBox" aria-live="polite"></div>
+        <div class="metric-box" id="metricBox"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. 三大 $20 旗舰订阅与 API 按量模式横向对比</h2>
+      <div tabindex="0" role="region" aria-labelledby="compare-table-caption" class="table-wrapper">
+        <table>
+          <caption id="compare-table-caption">2026 主流开发与效率订阅方案核心指标对比（支持键盘滚动与移动端卡片视图）</caption>
+          <thead>
+            <tr>
+              <th scope="col">方案</th>
+              <th scope="col">月费</th>
+              <th scope="col">最强场景</th>
+              <th scope="col">短板与限制</th>
+              <th scope="col">适合人群与入口</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">ChatGPT Plus</th>
+              <td>$20 / 月</td>
+              <td>联网深度研究、数据分析、语音/图像多模态、常规写代码全覆盖</td>
+              <td>需手动粘贴代码上下文，非 IDE 原生行内补全</td>
+              <td>全能主力首选 · <a href="https://shop.xiaheai.com" target="_blank" rel="noopener">夏禾AI 官方代充 →</a></td>
+            </tr>
+            <tr>
+              <th scope="row">Cursor Pro</th>
+              <td>$20 / 月</td>
+              <td>IDE 原生多文件修改、代码库索引、极速 Tab 补全</td>
+              <td>脱离编程后几乎不可用于生活、研究、图表或移动端语音</td>
+              <td>每天写代码 ≥ 4 小时的全职工程师</td>
+            </tr>
+            <tr>
+              <th scope="row">Claude Pro</th>
+              <td>$20 / 月</td>
+              <td>单次长架构设计、前端界面质量与自然语言表达极强</td>
+              <td>高并发时段额度收紧较快，支付与网络环境风控最严</td>
+              <td>重度架构师与技术写作用户（建议配稳主力）</td>
+            </tr>
+            <tr>
+              <th scope="row">ChatGPT Pro</th>
+              <td>$200 / 月</td>
+              <td>全天候高强度深度推理、科研与长链路复杂工程无额度焦虑</td>
+              <td>月费门槛较高，轻量用户容易闲置</td>
+              <td>重度科研 / 团队核心 · <a href="https://shop.xiaheai.com" target="_blank" rel="noopener">夏禾AI 官方通道 →</a></td>
+            </tr>
+            <tr>
+              <th scope="row">官方 API 按量计费</th>
+              <td>按 Token 实耗</td>
+              <td>自动化脚本、批量流水线、低频按需调用</td>
+              <td>重度日常对话（&gt; 25 轮/天）容易超出 $20 预算</td>
+              <td>脚本工程团队 · <a href="https://devbox-zero-ops.github.io/tokencost-zero/" target="_blank" rel="noopener">TokenCost Zero 测算 →</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>3. 常见选型与省钱问题（FAQ）</h2>
+      <div class="faq-item">
+        <div class="faq-q">Q1：如果预算 $40/月，怎样组合效率最高？</div>
+        <p class="faq-a">最高效的双订阅组合通常是 <strong>ChatGPT Plus（$20）+ Cursor Pro（$20）</strong>：Cursor 专注 IDE 内多文件编码与重构，ChatGPT Plus 承担联网查文档、Deep Research、报错分析、Excel/PDF 处理及手机端随时提问，互补度接近 100%。</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Q2：为什么只写少量代码时，不建议直接用按量 API 代替 Plus？</div>
+        <p class="faq-a">现代长上下文对话通常在 5–8 轮后就累积超过 20,000 输入 Token。如果没有做好 Prompt Cache 复用，每天 30 轮重度对话按旗舰模型 API 计费往往达到 $28–$55/月，远高于固定 $20/月的订阅费。你可以使用我们的免费本地工具 <a href="https://devbox-zero-ops.github.io/tokencost-zero/" target="_blank" rel="noopener">TokenCost Zero</a> 精确核算自己的月消耗。</p>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Q3：想把类似计算器、发票/简历工具私有部署给自己团队用？</div>
+        <p class="faq-a">查看 <a href="pro.html">XiaheAI ZeroSuite Pro 商业源码包（¥29 / 5 USDT 一次性买断）</a>，包含 7 款零外部依赖纯前端工具完整源码与商业白标部署说明，支持微信/支付宝/USDT 直付。</p>
+      </div>
+    </section>
+
+    <footer>
+      <a href="index.html">XiaheAI 工具矩阵</a> ·
+      <a href="chatgpt-plus-guide.html">Plus vs API 成本计算</a> ·
+      <a href="claude-vs-chatgpt-guide.html">Plus vs Claude 对比</a> ·
+      <a href="pro.html">ZeroSuite Pro 源码包</a> ·
+      <a href="https://shop.xiaheai.com" target="_blank" rel="noopener">夏禾AI 官方代充商城</a>
+    </footer>
+  </main>
+
+  <script>
+    const budgetEl = document.getElementById("budget");
+    const codeEl = document.getElementById("codeHours");
+    const promptsEl = document.getElementById("dailyPrompts");
+    const checks = [...document.querySelectorAll('#opts input[type="checkbox"]')];
+
+    function syncRangeFallback(el) {
+      if (!CSS.supports("accent-color", "auto")) {
+        const pct = ((Number(el.value) - Number(el.min)) / (Number(el.max) - Number(el.min))) * 100;
+        el.style.setProperty("--progress", pct + "%");
+      }
+    }
+
+    function update() {
+      const budget = Number(budgetEl.value);
+      const codeH = Number(codeEl.value);
+      const prompts = Number(promptsEl.value);
+      const tags = new Set(checks.filter((c) => c.checked).map((c) => c.value));
+
+      document.getElementById("budgetVal").textContent = `$${budget} / 月`;
+      document.getElementById("codeHoursVal").textContent = `${codeH} 小时/天`;
+      document.getElementById("dailyPromptsVal").textContent = `${prompts} 轮/天`;
+
+      [budgetEl, codeEl, promptsEl].forEach(syncRangeFallback);
+
+      // Estimate equivalent monthly API spend for flagship reasoning models
+      // Avg 6k input ($2.5/1M) + 1.2k output ($10/1M) => ~$0.027/prompt; coding adds ~12 prompts/hr equivalent
+      const effPrompts = prompts + codeH * 8;
+      const apiMonthly = Math.round(effPrompts * 30 * 0.027);
+      const subSavings = Math.max(0, apiMonthly - 20);
+
+      let headline = "";
+      let reason = "";
+      let primaryLink = "https://shop.xiaheai.com";
+      let primaryText = "前往夏禾AI官方自动发货通道 (shop.xiaheai.com) →";
+
+      if (budget >= 200 && (prompts >= 70 || codeH >= 7)) {
+        headline = "首选方案：ChatGPT Pro ($200/月) 或双主力组合";
+        reason = "你的日均重度推理与编码强度已进入专业高频区间，直接上 ChatGPT Pro 或搭配 Cursor Pro 可彻底避免额度触发限流。";
+      } else if (budget >= 40 && (codeH >= 3 || tags.has("repo"))) {
+        headline = "黄金组合：ChatGPT Plus ($20) + Cursor Pro ($20)";
+        reason = "预算充足且每天写代码时间较长：Cursor 专攻 IDE 多文件重构，ChatGPT Plus 承担联网研究、图表分析与全场景主力问答，互不重叠。";
+      } else if (budget < 20 && prompts <= 15 && codeH <= 1) {
+        headline = "轻量方案：按量 API + 免费本地工具套件";
+        reason = `当前日均约 ${prompts} 轮轻量对话，按量 API 月耗约 $${apiMonthly}，低于 $20 订阅门槛；用 TokenCost Zero 可进一步挑出低价高性价比模型。`;
+        primaryLink = "https://devbox-zero-ops.github.io/tokencost-zero/";
+        primaryText = "打开 TokenCost Zero 精确对比 API 费率 →";
+      } else if (codeH >= 5 && tags.has("repo") && !tags.has("search") && !tags.has("multimodal")) {
+        headline = "单订阅编程首选：Cursor Pro ($20/月)";
+        reason = "你几乎只聚焦于 IDE 全仓库多文件编码且不需要联网深度研究或多模态功能，单买 Cursor Pro 的写代码提效比最高；若后续补齐研究主力再配 ChatGPT Plus。";
+      } else {
+        headline = "单订阅全能首选：ChatGPT Plus ($20/月)";
+        reason = "在 $20 预算下，ChatGPT Plus 同时覆盖联网 Deep Research、语音/图片/Excel 分析、常规写代码与更友好的账号稳定性，综合投入产出比最高。";
+      }
+
+      document.getElementById("recBox").innerHTML = `
+        <div style="font-size:12px;color:#38bdf8;font-weight:700;margin-bottom:4px;">基于当前参数的匹配结论</div>
+        <strong style="font-size:17px;color:#4ade80;">${headline}</strong>
+        <p style="margin:8px 0 0;font-size:14px;color:#cbd5e1;">${reason}</p>
+        <div class="cta-row">
+          <a class="cta-btn" href="${primaryLink}" target="_blank" rel="noopener">${primaryText}</a>
+          <a class="cta-sec" href="pro.html">¥29 / 5 USDT 获取 7 款白标源码包</a>
+        </div>
+      `;
+
+      document.getElementById("metricBox").innerHTML = `
+        <div style="font-size:13px;color:#fbbf24;font-weight:700;margin-bottom:6px;">成本盈亏测算（按 30 天计）</div>
+        <div class="metric-row"><span>等效月交互轮次</span><strong>${effPrompts * 30} 轮</strong></div>
+        <div class="metric-row"><span>同强度旗舰 API 估算</span><strong>~$${apiMonthly} / 月</strong></div>
+        <div class="metric-row"><span>主力包月订阅费</span><strong>$20 / 月</strong></div>
+        <div class="metric-row"><span>包月对比 API 预计节省</span><strong style="color:#4ade80;">${subSavings > 0 ? `~$${subSavings} / 月` : "轻量阶段按量更省"}</strong></div>
+      `;
+    }
+
+    [budgetEl, codeEl, promptsEl].forEach((el) => el.addEventListener("input", update));
+    checks.forEach((c) => c.addEventListener("change", update));
+    update();
+  </script>
+</body>
+</html>
