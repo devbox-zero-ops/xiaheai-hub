@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2026 ChatGPT Plus / Pro 防封号自检清单：为什么代充容易封号？如何安全开通 — 夏禾AI</title>
-  <meta name="description" content="国内开通与使用 ChatGPT Plus / Pro 最怕遇到黑卡或脏 IP 封号。用这份 6 项交互式安全自检表排查风险，附夏禾AI官方正规充值自动发货入口（shop.xiaheai.com）。" />
+  <title>2026 ChatGPT Plus / Pro 防封号自检清单：避开拼车与黑卡，安全选型与续费 — 夏禾AI</title>
+  <meta name="description" content="国内开通与使用 ChatGPT Go / Plus / Pro 最怕遇到多人拼车号、脏 IP 或黑卡拒付封号。用 6 项交互式安全自检表排查风险，附独享成品号与官方自助直充安全对照（shop.xiaheai.com）。" />
   <link rel="canonical" href="https://devbox-zero-ops.github.io/xiaheai-hub/chatgpt-ban-prevention.html" />
   <script type="application/ld+json">
   {
@@ -13,57 +13,216 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "为什么低价 ChatGPT Plus 代充容易导致封号？",
+        "name": "为什么多人拼车号和来路不明的黑卡代充容易导致封号？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "远低于官价（$20/月）的低价代充通常使用盗刷卡、高风险虚拟卡或共享拼车账号，极易触发 OpenAI 风控封禁；应选择走正规官方充值通道的服务。"
+          "text": "多人共享拼车号存在几十个 IP 并发登录与对话串号风险，而盗刷黑卡或高风险卡段易触发 Stripe 拒付追回导致封禁；应选择正规单人独享成品号或原号官方自助直充通道。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "独享成品号（¥65–¥88）和原号自助直充（¥119.99）都安全吗？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "两者均为单人独享隔离使用，配合稳定节点与独立浏览器环境均可稳健运行；差异仅在于是否需要保留原有老号的历史记录与 Custom GPT 配置。"
         }
       }
     ]
   }
   </script>
   <style>
-    :root { --bg:#070b14; --panel:#0f172a; --card:#1e293b; --border:#334155; --text:#f1f5f9; --muted:#94a3b8; --accent:#38bdf8; --green:#4ade80; --warn:#fbbf24; }
+    :root {
+      color-scheme: dark;
+      --bg:#070b14;
+      --panel:#0f172a;
+      --card:#1e293b;
+      --border:#334155;
+      --text:#f1f5f9;
+      --muted:#94a3b8;
+      --accent:#38bdf8;
+      --green:#4ade80;
+      --warn:#fbbf24;
+    }
     * { box-sizing:border-box; }
-    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; background:var(--bg); color:var(--text); line-height:1.65; }
+    body {
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.65;
+      accent-color:var(--accent);
+    }
     a { color:var(--accent); text-decoration:none; }
+    a:hover { text-decoration:underline; }
     .top-bar { background:linear-gradient(90deg,#0f172a,#1e3a5f,#0f172a); border-bottom:1px solid rgba(56,189,248,0.35); padding:10px 16px; text-align:center; font-size:13.5px; }
-    .wrap { max-width:920px; margin:0 auto; padding:28px 18px 56px; }
+    .wrap { max-width:940px; margin:0 auto; padding:28px 18px 56px; }
     h1 { font-size:clamp(24px,4.2vw,35px); line-height:1.25; margin:0 0 12px; }
+    .nav-links { font-size:13px; margin-bottom:12px; display:flex; flex-wrap:wrap; gap:8px 14px; }
     .card { background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:22px; margin-bottom:20px; }
     .card h2 { margin:0 0 12px; font-size:18px; color:var(--accent); }
     .chk { display:flex; gap:10px; align-items:flex-start; background:var(--card); border:1px solid var(--border); border-radius:9px; padding:11px 13px; margin-bottom:9px; cursor:pointer; font-size:14px; }
-    .score-box { margin-top:14px; padding:14px; border-radius:10px; background:#131f33; border-left:4px solid var(--green); }
-    .cta-btn { display:inline-block; margin-top:12px; padding:11px 24px; border-radius:9px; background:linear-gradient(135deg,#0284c7,#10b981); color:#fff; font-weight:700; font-size:15px; }
-    footer { text-align:center; font-size:13px; color:var(--muted); margin-top:32px; }
+    .chk:hover { border-color:var(--accent); }
+    .chk input[type="checkbox"] { margin-top:3px; flex-shrink:0; }
+    .score-box { margin-top:14px; padding:16px; border-radius:10px; background:#131f33; border-left:4px solid var(--green); }
+    .cta-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+    .cta-btn { display:inline-block; padding:11px 22px; border-radius:9px; background:linear-gradient(135deg,#0284c7,#10b981); color:#fff; font-weight:700; font-size:14.5px; }
+    .cta-btn:hover { text-decoration:none; opacity:0.94; }
+    .cta-sec { display:inline-block; padding:11px 18px; border-radius:9px; background:var(--card); border:1px solid var(--border); color:var(--text); font-weight:600; font-size:14px; }
+    .table-wrapper {
+      overflow:auto;
+      max-inline-size:100%;
+      max-block-size:min(520px,80vh);
+      container-type:inline-size;
+      border-radius:10px;
+      border:1px solid var(--border);
+    }
+    .table-wrapper:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+    table { width:100%; border-collapse:separate; border-spacing:0; font-size:14px; }
+    caption { text-align:left; font-size:13px; color:var(--muted); padding:10px 12px; background:#0b1324; border-bottom:1px solid var(--border); }
+    thead { position:sticky; inset-block-start:0; z-index:2; }
+    th, td { padding:11px 12px; border-bottom:1px solid var(--border); text-align:left; vertical-align:top; }
+    thead th { background:#131f33; color:var(--text); font-weight:700; }
+    tbody th { position:sticky; inset-inline-start:0; z-index:1; background:var(--panel); font-weight:700; }
+    @container (width < 600px) {
+      table, thead, tbody, tr, th, td { display:block; }
+      thead { display:none; }
+      tr { margin-block-end:1rem; border:1px solid var(--border); border-radius:10px; overflow:hidden; background:#0b1324; }
+      tbody th { position:sticky; inset-block-start:0; z-index:2; background:#131f33; }
+      table {
+        --label-2:"风控等级";
+        --label-3:"关键说明";
+        --label-4:"参考档位";
+      }
+      td:nth-child(2)::before { content:var(--label-2) "："; color:var(--muted); font-weight:600; }
+      td:nth-child(3)::before { content:var(--label-3) "："; color:var(--muted); font-weight:600; }
+      td:nth-child(4)::before { content:var(--label-4) "："; color:var(--muted); font-weight:600; }
+    }
+    @supports not (accent-color: #38bdf8) {
+      .chk input[type="checkbox"] {
+        position:absolute !important;
+        clip-path:inset(50%) !important;
+        overflow:hidden !important;
+        width:1px !important;
+        height:1px !important;
+        margin:-1px !important;
+        padding:0 !important;
+        border:0 !important;
+        white-space:nowrap !important;
+      }
+      .chk { position:relative; padding-left:2.4rem; }
+      .chk input[type="checkbox"] + span::before {
+        content:"";
+        position:absolute;
+        left:0.9rem;
+        top:0.85rem;
+        width:1.1rem;
+        height:1.1rem;
+        border:2px solid var(--muted);
+        border-radius:4px;
+        background:#0b1324;
+      }
+      .chk input[type="checkbox"]:focus-visible + span::before { outline:2px solid var(--accent); outline-offset:2px; }
+      .chk input[type="checkbox"]:checked + span::before { background:var(--accent); border-color:var(--accent); }
+      .chk input[type="checkbox"]:checked + span::after {
+        content:"✓";
+        position:absolute;
+        left:1.1rem;
+        top:0.7rem;
+        color:#070b14;
+        font-weight:700;
+        font-size:0.85rem;
+      }
+    }
+    .pro-banner { background:linear-gradient(135deg,#131f33,#1e293b); border:1px solid rgba(74,222,128,0.35); border-radius:12px; padding:16px 20px; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; }
+    footer { text-align:center; font-size:13px; color:var(--muted); margin-top:32px; display:flex; flex-wrap:wrap; justify-content:center; gap:8px 14px; }
   </style>
 </head>
 <body>
   <div class="top-bar">
-    ⚡ <strong>夏禾AI 官方代充商城</strong>：ChatGPT Plus / Pro 正规官方通道 · 24小时自动发货 ·
+    ⚡ <strong>夏禾AI 官方代充商城</strong>：ChatGPT-Go ¥48 · 独享成品号 ¥65–¥88 · Plus 官方自助直充 ¥119.99 · 24h 自动发货 ·
     <a href="https://shop.xiaheai.com" target="_blank" rel="noopener" style="font-weight:700;text-decoration:underline;margin-left:4px;">立即前往 shop.xiaheai.com →</a>
   </div>
   <main class="wrap">
-    <div style="font-size:13px;margin-bottom:10px;"><a href="index.html">← 返回 XiaheAI 首页</a> · <a href="chatgpt-plus-guide.html">Plus vs API 成本测算</a> · <a href="claude-vs-chatgpt-guide.html">Plus vs Claude 对比</a></div>
+    <nav class="nav-links" aria-label="站内导航">
+      <a href="index.html">← 返回 XiaheAI 首页</a>
+      <a href="chatgpt-account-vs-topup.html">成品号 vs 原号直充</a>
+      <a href="chatgpt-payment-declined.html">绑卡拒付排查</a>
+      <a href="chatgpt-go-vs-plus.html">Go vs Plus 对比</a>
+      <a href="claude-vs-chatgpt-guide.html">Plus vs Claude 对比</a>
+    </nav>
     <h1>2026 ChatGPT Plus / Pro 防封号 6 项自检清单</h1>
-    <p style="color:var(--muted);">勾选你目前已经做到的安全习惯，实时评估账号健康分，远离黑卡与风控封禁。</p>
+    <p style="color:var(--muted);">勾选你目前已经做到的使用习惯，实时评估账号健康分，区分“多人共享拼车/黑卡”与“正规独享成品号/官方直充”的核心风控差异。</p>
 
     <section class="card">
-      <h2>账号安全自检打分器</h2>
-      <label class="chk"><input type="checkbox" checked /> <span>使用个人独享账号，不购买几十元的多人共享拼车号</span></label>
-      <label class="chk"><input type="checkbox" checked /> <span>使用稳定固定的干净海外网络节点，避免频繁跨国切换 IP</span></label>
-      <label class="chk"><input type="checkbox" checked /> <span>拒绝远低于官价（$20/月）的来路不明黑卡/盗刷代充</span></label>
-      <label class="chk"><input type="checkbox" /> <span>通过正规官方支付通道（如 Apple/官方直充）续费 ChatGPT Plus/Pro</span></label>
-      <label class="chk"><input type="checkbox" /> <span>绑定可靠的个人常用邮箱（如 Gmail/Outlook）并开启二次验证</span></label>
-      <label class="chk"><input type="checkbox" /> <span>不在同一账号下高频违规批量调用或触发自动化滥用风控</span></label>
+      <h2>1. 账号安全自检打分器</h2>
+      <label class="chk" for="chk-1"><input id="chk-1" type="checkbox" checked /> <span>使用单人独享账号（自建老号或正规独享成品号），远离多人共享拼车号</span></label>
+      <label class="chk" for="chk-2"><input id="chk-2" type="checkbox" checked /> <span>使用稳定固定的干净海外网络节点，避免短时间频繁跨国切换 IP</span></label>
+      <label class="chk" for="chk-3"><input id="chk-3" type="checkbox" checked /> <span>拒绝来路不明的盗刷黑卡，或用高风险虚拟卡在 Stripe 连续试刷扣款</span></label>
+      <label class="chk" for="chk-4"><input id="chk-4" type="checkbox" /> <span>通过正规官方直充通道或可改密独享号续费（如 shop.xiaheai.com 自动发货）</span></label>
+      <label class="chk" for="chk-5"><input id="chk-5" type="checkbox" /> <span>使用独立浏览器配置文件登录工作号，减少插件冲突与 Cookie 异常</span></label>
+      <label class="chk" for="chk-6"><input id="chk-6" type="checkbox" /> <span>自动化批处理需求改走正规 API，不在 Web 端高频并发脚本刷接口</span></label>
 
-      <div class="score-box" id="scoreOut"></div>
+      <div class="score-box" id="scoreOut" aria-live="polite"></div>
+    </section>
+
+    <section class="card">
+      <h2>2. 不同获取方式的真实风控对比</h2>
+      <div tabindex="0" role="region" aria-labelledby="risk-caption" class="table-wrapper">
+        <table>
+          <caption id="risk-caption">不同开通方式在账号归属、支付风控与长期稳定性上的差异</caption>
+          <thead>
+            <tr>
+              <th scope="col">方式</th>
+              <th scope="col">风控等级</th>
+              <th scope="col">关键说明</th>
+              <th scope="col">参考档位</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">原号官方自助直充</th>
+              <td style="color:#4ade80;font-weight:700;">低风险（最稳）</td>
+              <td>保留原有历史对话、项目记忆与 Custom GPT，无需迁移工作流</td>
+              <td>¥119.99 / 月（<a href="https://shop.xiaheai.com" target="_blank" rel="noopener">前往直充</a>）</td>
+            </tr>
+            <tr>
+              <th scope="row">正规单人独享成品号</th>
+              <td style="color:#4ade80;font-weight:700;">低风险（高性价比）</td>
+              <td>独立邮箱密码、单人独享不拼车，新开工作号首选</td>
+              <td>¥65–¥88 / 月（<a href="https://shop.xiaheai.com" target="_blank" rel="noopener">查看现货</a>）</td>
+            </tr>
+            <tr>
+              <th scope="row">ChatGPT-Go 入门独享</th>
+              <td style="color:#4ade80;font-weight:700;">低风险（低门槛）</td>
+              <td>适合轻量问答与体验，避免为低频需求多花预算</td>
+              <td>¥48 / 月（<a href="https://shop.xiaheai.com" target="_blank" rel="noopener">查看现货</a>）</td>
+            </tr>
+            <tr>
+              <th scope="row">多人拼车共享 / 盗刷黑卡</th>
+              <td style="color:#fbbf24;font-weight:700;">高风险（极易封）</td>
+              <td>多 IP 并发登录、对话串号或 Stripe 拒付追回直接封号</td>
+              <td>不建议购买</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="pro-banner">
+      <div>
+        <strong style="color:var(--green);font-size:15px;">全套零追踪本地工具包：XiaheAI ZeroSuite Pro（8 款工具 + 10 篇交互测算页）</strong>
+        <div style="font-size:13px;color:var(--muted);margin-top:4px;">所有工具纯前端/零依赖本地运行，支持 5 USDT / ¥29 白标源码买断。</div>
+      </div>
+      <a class="cta-sec" href="pro.html">了解 ZeroSuite Pro →</a>
     </section>
 
     <footer>
-      <a href="index.html">XiaheAI 工具矩阵</a> ·
-      <a href="chatgpt-plus-guide.html">Plus vs API 测算</a> ·
-      <a href="https://shop.xiaheai.com" target="_blank">夏禾AI 官方代充 (shop.xiaheai.com)</a>
+      <a href="index.html">XiaheAI 工具矩阵</a>
+      <a href="chatgpt-account-vs-topup.html">成品号 vs 原号直充</a>
+      <a href="chatgpt-payment-declined.html">绑卡拒付排查</a>
+      <a href="chatgpt-plus-guide.html">Plus vs API 测算</a>
+      <a href="pro.html">ZeroSuite Pro 源码包</a>
+      <a href="https://shop.xiaheai.com" target="_blank" rel="noopener">夏禾AI 官方代充 (shop.xiaheai.com)</a>
     </footer>
   </main>
   <script>
@@ -71,11 +230,14 @@
     function update() {
       const n = inputs.filter(i => i.checked).length;
       const pct = Math.round((n / inputs.length) * 100);
-      const level = pct >= 80 ? "账号安全度：高（稳健）" : pct >= 50 ? "账号安全度：中（建议补齐正规充值渠道）" : "账号安全度：偏低（存在风控风险）";
+      const level = pct >= 80 ? "账号安全度：高（稳健）" : pct >= 50 ? "账号安全度：中（建议补齐正规独享/官方直充通道）" : "账号安全度：偏低（存在明显风控隐患）";
       document.getElementById("scoreOut").innerHTML = `
         <strong style="font-size:16px;color:${pct >= 80 ? '#4ade80' : '#fbbf24'};">${level} — ${pct} / 100 分</strong>
-        <p style="margin:6px 0 8px;font-size:14px;color:#cbd5e1;">想省去海外信用卡与风控烦恼？直接走 <strong>夏禾AI（shop.xiaheai.com）</strong> 正规官方充值通道，24 小时自动发货。</p>
-        <a class="cta-btn" href="https://shop.xiaheai.com" target="_blank" rel="noopener">前往夏禾AI正规官方代充 (shop.xiaheai.com) →</a>
+        <p style="margin:6px 0 0;font-size:14px;color:#cbd5e1;">想避开拼车串号与海外绑卡拒付？直接在 <strong>夏禾AI（shop.xiaheai.com）</strong> 按需选择 ChatGPT-Go（¥48）、独享成品号（¥65–¥88）或原号官方自助直充（¥119.99），24 小时自动发货。</p>
+        <div class="cta-row">
+          <a class="cta-btn" href="https://shop.xiaheai.com" target="_blank" rel="noopener">前往夏禾AI官方自动发货商城 (shop.xiaheai.com) →</a>
+          <a class="cta-sec" href="chatgpt-account-vs-topup.html">3 步选成品号 vs 原号直充 →</a>
+        </div>
       `;
     }
     inputs.forEach(i => i.addEventListener("change", update));
